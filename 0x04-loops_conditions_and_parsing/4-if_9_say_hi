@@ -12,4 +12,3 @@ if [ $count -eq 10 ]
 then
   echo "Hi"
 fi
-
