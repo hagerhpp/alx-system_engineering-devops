@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Bash script to display lines containing the word "bash" and extract the PID
+
+ps -auxf | grep bash
