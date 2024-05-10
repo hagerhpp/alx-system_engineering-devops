@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bash script to ping an IP address
+# Bash script to ping an IP address and display roundtrip time
 
 if [[ $# -eq 0 ]]; then
   echo "Usage: $0 {IP_ADDRESS}"
@@ -8,4 +8,17 @@ fi
 
 ip_address="$1"
 
-ping -c 5 "$ip_address"
+ping_output=$(ping -c 5 "$ip_address")
+
+roundtrip_times=()
+while IFS= read -r line; do
+  if [[ "$line" == *"time="* ]]; then
+    time_value=$(echo "$line" | awk -F'time=' '{print $2}' | awk -F' ' '{print $1}')
+    roundtrip_times+=("$time_value")
+  fi
+done <<< "$ping_output"
+
+echo "Roundtrip Times:"
+for time_value in "${roundtrip_times[@]}"; do
+  echo "$time_value ms"
+done
