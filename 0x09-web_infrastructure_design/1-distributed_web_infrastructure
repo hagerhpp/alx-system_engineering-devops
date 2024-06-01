@@ -1,0 +1,41 @@
+Explanation of Infrastructure Components
+Load Balancer (HAProxy):
+
+Purpose: Distributes incoming traffic across multiple servers to ensure no single server is overwhelmed.
+Distribution Algorithm: Round Robin.
+How it works: Each incoming request is distributed to the next server in line. This ensures an even distribution of load among all available servers.
+Web Servers (Nginx):
+
+Purpose: Handle HTTP requests, serve static content, and forward dynamic content requests to application servers.
+Addition: Adding a second web server improves redundancy and load handling.
+Application Servers:
+
+Purpose: Execute the application code, process business logic, and generate dynamic content.
+Addition: Having multiple application servers ensures that if one fails, the others can handle the traffic.
+Database (MySQL):
+
+Primary-Replica Setup:
+Primary (Master) Node: Handles all write operations.
+Replica (Slave) Node: Copies data from the primary node and handles read operations. This setup improves read performance and provides redundancy.
+How it works: The primary node processes all data modification requests (INSERT, UPDATE, DELETE), and these changes are replicated to the replica node to ensure data consistency.
+Configuration Details
+Active-Active Setup: Both web/application servers are active and handle traffic simultaneously, balancing the load across them.
+Difference: In an active-active setup, both servers handle requests all the time. In an active-passive setup, one server is on standby and only takes over if the active server fails.
+Issues with This Infrastructure
+Single Point of Failure (SPOF):
+
+Load Balancer: If the load balancer fails, the entire system becomes inaccessible. This can be mitigated by using redundant load balancers.
+Primary Database: If the primary database fails, write operations cannot be processed. This can be mitigated by implementing a failover strategy where the replica can be promoted to primary.
+Security Issues:
+
+No Firewall: Without a firewall, the servers are vulnerable to unauthorized access and attacks.
+No HTTPS: Without HTTPS, data transmitted between users and the server is not encrypted, making it susceptible to interception.
+No Monitoring:
+
+No System Monitoring: Without monitoring, issues such as high load, server failures, or security breaches may go unnoticed until they cause significant problems.
+Solution: Implementing monitoring tools like Nagios, Prometheus, or Grafana can help detect and respond to issues proactively.
+Improvements for Robustness
+Redundant Load Balancers: Use multiple load balancers to eliminate the load balancer as a SPOF.
+Firewalls: Implement firewalls to protect the infrastructure from unauthorized access.
+HTTPS: Enable HTTPS to secure communication between users and the web server.
+Monitoring Tools: Use monitoring tools to keep track of server health, load, and security incidents.

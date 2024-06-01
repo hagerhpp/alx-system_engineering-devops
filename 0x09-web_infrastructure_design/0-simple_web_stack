@@ -1,0 +1,18 @@
+Server: A server is a physical or virtual machine that hosts the components necessary for the website to function, including the web server, application server, and database.
+
+Domain Name: foobar.com is a human-readable address that maps to an IP address, allowing users to access the website without needing to remember numerical IP addresses.
+
+DNS Record: The www in www.foobar.com is a CNAME (Canonical Name) record that points to the root domain (foobar.com), which in turn points to the IP address 8.8.8.8.
+
+Web Server (Nginx): The web server handles incoming HTTP requests from users' browsers, serves static content, and forwards dynamic requests to the application server.
+
+Application Server: The application server runs the application code (PHP, Python, Node.js, etc.), processing the business logic and dynamically generating content based on the request.
+
+Database (MySQL): The database stores and manages data, providing the application server with data retrieval and storage capabilities.
+
+Communication: The server uses the HTTP/HTTPS protocol to communicate with the user's browser.
+
+Issues with This Infrastructure
+Single Point of Failure (SPOF): Since all components are hosted on a single server, if the server fails, the entire website becomes unavailable.
+Downtime for Maintenance: Performing maintenance or deploying new code requires restarting services, which causes downtime.
+Scalability: A single server can only handle a limited amount of traffic. As traffic increases, performance degrades, and the server may become overwhelmed.

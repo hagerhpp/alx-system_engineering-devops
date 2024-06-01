@@ -1,0 +1,56 @@
+Load Balancer (HAProxy):
+
+Purpose: Distributes incoming traffic across multiple servers to ensure no single server is overwhelmed.
+Distribution Algorithm: Round Robin.
+Why Added: Balances load and provides redundancy.
+Web Servers (Nginx):
+
+Purpose: Handle HTTP requests, serve static content, and forward dynamic content requests to application servers.
+Why Added: Improves redundancy and load handling.
+Firewalls: Protects web servers from unauthorized access.
+Application Servers:
+
+Purpose: Execute the application code, process business logic, and generate dynamic content.
+Why Added: Ensures redundancy and handles dynamic requests.
+Firewalls: Protects application servers from unauthorized access.
+Database (MySQL):
+
+Primary-Replica Setup: Improves read performance and provides redundancy.
+Primary Node: Handles all write operations.
+Replica Node: Copies data from the primary node and handles read operations.
+Firewalls:
+
+Purpose: Protect each component from unauthorized access and attacks.
+Why Added: Enhance security by controlling incoming and outgoing traffic.
+SSL Certificate:
+
+Purpose: Encrypts traffic between the user and the server.
+Why Added: Ensures data privacy and integrity by using HTTPS.
+Monitoring Clients (Data Collectors):
+
+Purpose: Collects metrics and logs for monitoring and alerting.
+Why Added: Provides visibility into the infrastructure's performance and health.
+How it works: Monitoring clients collect data such as CPU usage, memory usage, QPS (queries per second), and error rates, sending it to a centralized monitoring service like Sumologic.
+Security and Monitoring
+Firewalls: Control access to each server, blocking unauthorized access and protecting against attacks.
+HTTPS: Encrypts communication to prevent eavesdropping and data tampering.
+Monitoring:
+Purpose: Ensures the infrastructure is functioning correctly and efficiently.
+Data Collection: Monitoring clients collect performance metrics and logs, sending them to a monitoring service for analysis and alerting.
+Monitoring Web Server QPS
+Setup: Configure the monitoring client on the web servers to track the number of requests per second.
+Collect Data: The monitoring client collects QPS data and sends it to the monitoring service.
+Analyze: The monitoring service analyzes the data, providing insights and alerts if QPS exceeds thresholds.
+Issues with This Infrastructure
+SSL Termination at Load Balancer:
+
+Issue: Terminating SSL at the load balancer means traffic between the load balancer and the web servers is unencrypted.
+Solution: Use end-to-end encryption by also configuring SSL between the load balancer and web servers.
+Single MySQL Server for Writes:
+
+Issue: If the primary MySQL server fails, write operations cannot be processed.
+Solution: Implement a failover strategy where the replica can be promoted to primary.
+Servers with All Same Components:
+
+Issue: This design can lead to resource contention and scalability issues.
+Solution: Use separate servers for each component (web server, application server, database) to better manage resources and scale independently.

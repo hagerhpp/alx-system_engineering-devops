@@ -1,0 +1,49 @@
+Explanation of Additional Elements
+Additional Server:
+
+Purpose: Increases redundancy and load handling capacity.
+Why Added: Distributes load more effectively and provides failover capabilities.
+Load Balancer Cluster (HAProxy):
+
+Configuration: HAProxy in a clustered setup with three load balancers.
+Why Added: Ensures high availability and failover. If one load balancer fails, the others can continue to distribute traffic.
+Distribution Algorithm: Round Robin.
+How it works: Each incoming request is distributed to the next available server, ensuring even load distribution.
+Dedicated Servers for Components:
+
+Web Servers (Nginx): Dedicated to serving static content and forwarding requests to application servers.
+Application Servers: Dedicated to executing the application code and handling dynamic content.
+Database Servers (MySQL):
+Primary Node: Handles write operations.
+Replica Nodes: Handle read operations and replicate data from the primary node.
+Purpose of Additional Elements
+Firewalls:
+
+Purpose: Protect each component from unauthorized access and attacks.
+Why Added: Enhance security by controlling incoming and outgoing traffic for each server.
+SSL Certificate:
+
+Purpose: Encrypts traffic between the user and the server.
+Why Added: Ensures data privacy and integrity by using HTTPS.
+Monitoring Clients (Data Collectors):
+
+Purpose: Collects metrics and logs for monitoring and alerting.
+Why Added: Provides visibility into the infrastructure's performance and health.
+How it works: Monitoring clients collect data such as CPU usage, memory usage, QPS (queries per second), and error rates, sending it to a centralized monitoring service like Sumologic.
+Issues with This Infrastructure
+SSL Termination at Load Balancer:
+
+Issue: Terminating SSL at the load balancer means traffic between the load balancer and the web servers is unencrypted.
+Solution: Use end-to-end encryption by also configuring SSL between the load balancer and web servers.
+Single MySQL Server for Writes:
+
+Issue: If the primary MySQL server fails, write operations cannot be processed.
+Solution: Implement a failover strategy where a replica can be promoted to primary, ensuring continuous write capability.
+Servers with All Same Components:
+
+Issue: Resource contention and scalability issues.
+Solution: Use dedicated servers for each component to better manage resources and scale independently.
+Monitoring Web Server QPS
+Setup: Configure the monitoring client on the web servers to track the number of requests per second.
+Collect Data: The monitoring client collects QPS data and sends it to the monitoring service.
+Analyze: The monitoring service analyzes the data, providing insights and alerts if QPS exceeds thresholds.
